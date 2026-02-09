@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Rhyan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Playfair+Display&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffe4e6, #fecdd3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      width: 90%;
+      max-width: 380px;
+      border-radius: 18px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-family: 'Allura', cursive;
+      font-size: 44px;
+      color: #be123c;
+      margin: 10px 0;
+      animation: writeName 3s steps(30) forwards;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #be123c;
+      width: 0;
+    }
+
+    @keyframes writeName {
+      to { width: 100%; border-right: none; }
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 22px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      background: #ec4899;
+      color: white;
+      cursor: pointer;
+    }
+
+    .choices button {
+      width: 120px;
+      margin: 10px;
+    }
+
+    .disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    #dodge {
+      position: absolute;
+    }
+
+    /* Floating hearts & flowers */
+    .float {
+      position: absolute;
+      font-size: 24px;
+      animation: floatUp linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh) rotate(0deg);
+      }
+      to {
+        transform: translateY(-10vh) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Floating elements -->
+<script>
+  const emojis = ["💖", "💕", "🌸", "🌷", "💐"];
+  for (let i = 0; i < 25; i++) {
+    const span = document.createElement("span");
+    span.className = "float";
+    span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    span.style.left = Math.random() * 100 + "vw";
+    span.style.animationDuration = 6 + Math.random() * 6 + "s";
+    span.style.fontSize = 20 + Math.random() * 20 + "px";
+    document.body.appendChild(span);
+  }
+</script>
+
+<div class="card" id="card">
+  <h1>Rhyan</h1>
+  <h2>when was our first kiss</h2>
+  <input id="answer" placeholder="Type your answer here">
+  <button onclick="nextQuestion()">Next</button>
+</div>
+
+<script>
+  let step = 1;
+
+  function nextQuestion() {
+    const answer = document.getElementById("answer").value.trim();
+
+    if (step === 1) {
+      if (answer !== "October 31st") {
+        alert("Not quite… try again 💕");
+        return;
+      }
+      step = 2;
+      showQuestion2();
+    }
+  }
+
+  function showQuestion2() {
+    const card = document.getElementById("card");
+    card.innerHTML = `
+      <h1>Rhyan</h1>
+      <h2>are you having a good morning?</h2>
+      <button id="dodge">Next</button>
+    `;
+
+    const dodgeBtn = document.getElementById("dodge");
+
+    dodgeBtn.addEventListener("mouseover", () => {
+      dodgeBtn.style.left = Math.random() * 240 + "px";
+      dodgeBtn.style.top = Math.random() * 160 + "px";
+    });
+
+    card.addEventListener("click", () => {
+      step = 3;
+      showQuestion3();
+    }, { once: true });
+  }
+
+  function showQuestion3() {
+    const card = document.getElementById("card");
+    card.innerHTML = `
+      <h1>Rhyan</h1>
+      <h2>will you be my valentine</h2>
+      <div class="choices">
+        <button class="disabled">Yes</button>
+        <button onclick="finalMessage()">No</button>
+      </div>
+    `;
+  }
+
+  function finalMessage() {
+    const card = document.getElementById("card");
+    card.innerHTML = `
+      <h1>💘</h1>
+      <h2>darn it okay</h2>
+      <p style="font-size:18px;">
+        my place <strong>7:30</strong><br>
+        for a <strong>BOOST</strong> for that yes 😌
+      </p>
+    `;
+  }
+</script>
+
+</body>
+</html>
